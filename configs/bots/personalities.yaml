@@ -1,0 +1,40 @@
+bots:
+  calling_station:
+    description: "Rarely folds, rarely raises, calls down light with weak pairs and draws."
+    preflop_vpip_threshold: 0.28
+    preflop_raise_threshold: 0.72
+    postflop_call_margin: -0.18
+    postflop_value_threshold: 0.74
+    bluff_freq: 0.04
+    fold_to_bet_tightness: 0.15
+    preferred_bet_sizes: ["BET_33", "BET_75"]
+
+  nit:
+    description: "Plays only premium hands preflop and folds quickly postflop when missing."
+    preflop_vpip_threshold: 0.68
+    preflop_raise_threshold: 0.74
+    postflop_call_margin: 0.12
+    postflop_value_threshold: 0.70
+    bluff_freq: 0.03
+    fold_to_bet_tightness: 0.75
+    preferred_bet_sizes: ["BET_75", "BET_150"]
+
+  maniac:
+    description: "Hyper-aggressive across all streets with frequent large bets and bluffs."
+    preflop_vpip_threshold: 0.25
+    preflop_raise_threshold: 0.40
+    postflop_call_margin: -0.10
+    postflop_value_threshold: 0.52
+    bluff_freq: 0.45
+    fold_to_bet_tightness: 0.20
+    preferred_bet_sizes: ["BET_75", "BET_150", "ALL_IN"]
+
+  tag:
+    description: "Tight-Aggressive balanced baseline respecting position, pot odds, and equity."
+    preflop_vpip_threshold: 0.50
+    preflop_raise_threshold: 0.58
+    postflop_call_margin: 0.01
+    postflop_value_threshold: 0.62
+    bluff_freq: 0.16
+    fold_to_bet_tightness: 0.45
+    preferred_bet_sizes: ["BET_33", "BET_75"]

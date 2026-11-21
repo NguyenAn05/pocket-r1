@@ -1,0 +1,40 @@
+[project]
+name = "pocket-r1"
+version = "0.1.0"
+description = "Self-Evolving AI Gym for Poker Tactical Reasoning with SLM + DeBERTa-v3 Step-level PRM + GRPO"
+readme = "docs/plans/PROJECT_IDEA.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "pokerkit>=0.6.0",
+    "treys>=0.1.8",
+    "pydantic>=2.7.0",
+    "pyyaml>=6.0.1",
+    "numpy>=1.26.0",
+    "openai>=1.30.0",
+    "tqdm>=4.66.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "ruff>=0.5.0",
+]
+tracking = [
+    "wandb>=0.17.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pocket_r1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

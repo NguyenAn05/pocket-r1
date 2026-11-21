@@ -1,0 +1,20 @@
+experiment_name: exp0_baseline
+eval_suite_path: data/eval_suites/hu_nlhe_heldout_v1.jsonl
+output_dir: reports/exp0_baseline
+opponents:
+  - calling_station
+  - nit
+  - maniac
+  - tag
+duplicate_pairs_per_opponent: 250
+slm:
+  backend: openai_compatible  # openai_compatible | mock
+  model_name: Qwen/Qwen2.5-3B-Instruct
+  base_url: http://localhost:8000/v1
+  api_key_env: OPENAI_API_KEY
+  temperature: 0.0
+  max_tokens: 512
+  few_shot: true
+compute_ev: true
+ev_rollouts: 32
+seed: 42

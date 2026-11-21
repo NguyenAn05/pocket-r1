@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Testing & linting
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Experiment logs & checkpoints
+wandb/
+mlruns/
+outputs/
+checkpoints/
+logs/
+*.ckpt
+*.pt
+*.safetensors
+
+# Data (keep eval_suites tracked if small, ignore large raw/processed artifacts)
+data/sft/
+data/prm_*/
+data/rollouts/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.env
