@@ -27,6 +27,7 @@ def main() -> None:
     parser.add_argument("--model", type=str, default=None)
     parser.add_argument("--base-url", type=str, default=None)
     parser.add_argument("--pairs", type=int, default=None, help="Limit pairs per opponent")
+    parser.add_argument("--workers", type=int, default=None, help="Concurrent worker threads")
     parser.add_argument("--no-ev", action="store_true", help="Skip Monte Carlo EV calculation")
     parser.add_argument("--output-dir", type=str, default=None)
     args = parser.parse_args()
@@ -36,6 +37,7 @@ def main() -> None:
     backend = args.backend or slm_cfg.get("backend", "openai_compatible")
     model_name = args.model or slm_cfg["model_name"]
     base_url = args.base_url or slm_cfg.get("base_url", "http://localhost:8000/v1")
+    max_workers = args.workers if args.workers is not None else int(cfg.get("max_workers", 1))
     out_dir = Path(args.output_dir or cfg["output_dir"])
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -49,6 +51,7 @@ def main() -> None:
             temperature=slm_cfg.get("temperature", 0.0),
             max_tokens=slm_cfg.get("max_tokens", 512),
             few_shot=slm_cfg.get("few_shot", True),
+            enable_thinking=slm_cfg.get("enable_thinking", False),
         )
 
     all_specs = load_eval_suite(cfg["eval_suite_path"])
@@ -71,7 +74,14 @@ def main() -> None:
         if args.pairs is not None:
             opp_specs = opp_specs[: args.pairs]
         opp_bot = create_bot(opp_name, seed=cfg.get("seed", 42), equity_samples=50)
-        summary, pair_bbs, recs = arena.evaluate(hero, opp_bot, opp_specs, show_progress=True)
+        summary, pair_bbs, recs = arena.evaluate(
+            hero,
+            opp_bot,
+            opp_specs,
+            show_progress=True,
+            max_workers=max_workers,
+            opponent_factory=lambda s, n=opp_name: create_bot(n, seed=s, equity_samples=50),
+        )
         per_opp[opp_name] = summary
         all_pair_bbs.extend(pair_bbs)
         all_records.extend(recs)

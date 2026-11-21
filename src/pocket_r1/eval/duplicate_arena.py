@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -172,19 +174,57 @@ class DuplicateArena:
         opponent: BaseAgent,
         specs: list[DuplicateHandSpec],
         show_progress: bool = False,
+        max_workers: int = 1,
+        opponent_factory: Callable[[int], BaseAgent] | None = None,
     ) -> tuple[EvaluationSummary, list[float], list[TrajectoryRecord]]:
-        pair_mean_bbs: list[float] = []
-        all_records: list[TrajectoryRecord] = []
+        """Evaluate hero vs opponent on duplicate pairs (supports concurrent vLLM batching)."""
+        if max_workers <= 1:
+            pair_mean_bbs: list[float] = []
+            all_records: list[TrajectoryRecord] = []
+            iterator = tqdm(specs, desc=f"vs {opponent.name}", disable=not show_progress)
+            for spec in iterator:
+                p_a, rec_a = self._play_single_hand(hero, opponent, 0, spec, "seat0")
+                p_b, rec_b = self._play_single_hand(hero, opponent, 1, spec, "seat1")
+                pair_mean_bbs.append((p_a + p_b) / 2.0)
+                all_records.extend(rec_a)
+                all_records.extend(rec_b)
+            summary = compute_eval_summary(pair_mean_bbs, all_records)
+            return summary, pair_mean_bbs, all_records
 
-        iterator = tqdm(specs, desc=f"vs {opponent.name}", disable=not show_progress)
-        for spec in iterator:
-            # Hand A: Hero in Seat 0 (BB), Villain in Seat 1 (BTN)
-            p_a, rec_a = self._play_single_hand(hero, opponent, 0, spec, "seat0")
-            # Hand B: Hero in Seat 1 (BTN), Villain in Seat 0 (BB) on identical deck
-            p_b, rec_b = self._play_single_hand(hero, opponent, 1, spec, "seat1")
-            pair_mean_bbs.append((p_a + p_b) / 2.0)
-            all_records.extend(rec_a)
-            all_records.extend(rec_b)
+        # Concurrent execution: each pair gets an isolated opponent instance for thread safety
+        orig_logger = self.trajectory_logger
+        self.trajectory_logger = None  # log deterministically on main thread
+
+        def _run_pair(idx_spec: tuple[int, DuplicateHandSpec]) -> tuple[int, float, list[TrajectoryRecord]]:
+            idx, spec = idx_spec
+            opp_inst = opponent_factory(spec.seed) if opponent_factory is not None else opponent
+            p_a, rec_a = self._play_single_hand(hero, opp_inst, 0, spec, "seat0")
+            p_b, rec_b = self._play_single_hand(hero, opp_inst, 1, spec, "seat1")
+            return idx, (p_a + p_b) / 2.0, rec_a + rec_b
+
+        results: dict[int, tuple[float, list[TrajectoryRecord]]] = {}
+        try:
+            with ThreadPoolExecutor(max_workers=max_workers) as pool:
+                futures = [pool.submit(_run_pair, (i, s)) for i, s in enumerate(specs)]
+                for fut in tqdm(
+                    as_completed(futures),
+                    total=len(futures),
+                    desc=f"vs {opponent.name} ({max_workers}w)",
+                    disable=not show_progress,
+                ):
+                    idx, mean_bb, recs = fut.result()
+                    results[idx] = (mean_bb, recs)
+        finally:
+            self.trajectory_logger = orig_logger
+
+        pair_mean_bbs = []
+        all_records = []
+        for i in range(len(specs)):
+            mean_bb, recs = results[i]
+            pair_mean_bbs.append(mean_bb)
+            all_records.extend(recs)
+            if self.trajectory_logger is not None:
+                self.trajectory_logger.log_many(recs)
 
         summary = compute_eval_summary(pair_mean_bbs, all_records)
         return summary, pair_mean_bbs, all_records

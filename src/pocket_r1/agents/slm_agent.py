@@ -29,7 +29,8 @@ class SLMAgent(BaseAgent):
         temperature: float = 0.0,
         max_tokens: int = 512,
         few_shot: bool = False,
-        timeout: float = 60.0,
+        enable_thinking: bool = False,
+        timeout: float = 120.0,
     ) -> None:
         from openai import OpenAI
 
@@ -38,18 +39,22 @@ class SLMAgent(BaseAgent):
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.few_shot = few_shot
+        self.enable_thinking = enable_thinking
         resolved_key = api_key or os.environ.get(api_key_env, "EMPTY")
         self.client = OpenAI(base_url=base_url, api_key=resolved_key, timeout=timeout)
 
     def act(self, obs: Observation) -> AgentResult:
         prompt_text = format_observation(obs)
         messages = build_chat_messages(obs, few_shot=self.few_shot)
-        completion = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,  # type: ignore[arg-type]
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-        )
+        kwargs: dict = {
+            "model": self.model_name,
+            "messages": messages,
+            "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
+        }
+        if not self.enable_thinking and "qwen3" in self.model_name.lower():
+            kwargs["extra_body"] = {"chat_template_kwargs": {"enable_thinking": False}}
+        completion = self.client.chat.completions.create(**kwargs)
         raw_text = completion.choices[0].message.content or ""
         parsed = parse_poker_cot(raw_text, legal_actions=obs.legal_actions)
         return AgentResult(
