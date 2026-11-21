@@ -38,7 +38,8 @@ mlruns/
 outputs/
 checkpoints/
 logs/
-kaggle_runner/output/
+kaggle_runner/output*/
+kaggle_runner/exp1b_lora_pkg/
 *.ckpt
 *.pt
 *.safetensors

@@ -10,7 +10,9 @@
   "enable_tpu": false,
   "enable_internet": true,
   "keywords": [],
-  "dataset_sources": [],
+  "dataset_sources": [
+    "nguyenan2511/pocket-r1-exp1b-lora"
+  ],
   "kernel_sources": [],
   "competition_sources": [],
   "model_sources": [],
