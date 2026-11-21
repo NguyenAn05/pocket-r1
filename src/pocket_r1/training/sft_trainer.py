@@ -189,6 +189,10 @@ def train_sft_model(cfg: SFTTrainConfig) -> Path:
     out_dir = Path(cfg.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    eff_batch = max(1, cfg.per_device_train_batch_size * cfg.gradient_accumulation_steps)
+    total_steps = max(1, int((len(train_ds) / eff_batch) * cfg.num_train_epochs))
+    warmup_steps = max(1, int(total_steps * cfg.warmup_ratio))
+
     train_args = TrainingArguments(
         output_dir=str(out_dir),
         num_train_epochs=cfg.num_train_epochs,
@@ -197,7 +201,7 @@ def train_sft_model(cfg: SFTTrainConfig) -> Path:
         gradient_accumulation_steps=cfg.gradient_accumulation_steps,
         learning_rate=cfg.learning_rate,
         lr_scheduler_type="cosine",
-        warmup_ratio=cfg.warmup_ratio,
+        warmup_steps=warmup_steps,
         fp16=cfg.fp16,
         bf16=not cfg.fp16,
         logging_steps=25,
