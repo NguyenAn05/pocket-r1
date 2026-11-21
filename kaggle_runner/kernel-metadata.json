@@ -14,6 +14,6 @@
   "kernel_sources": [],
   "competition_sources": [],
   "model_sources": [],
-  "docker_image_pinning_type": "LatestAvailable",
+  "docker_image_pinning_type": "latest",
   "machine_shape": "NvidiaTeslaT4"
 }
