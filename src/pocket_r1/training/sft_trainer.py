@@ -73,18 +73,16 @@ def _apply_chat_template_safe(
     add_generation_prompt: bool,
     enable_thinking: bool,
 ) -> list[int]:
-    """Apply chat template supporting Qwen3 enable_thinking=False cleanly."""
+    """Apply chat template (tokenize=False -> encode) so return type is always list[int]."""
     kwargs: dict[str, Any] = {
-        "tokenize": True,
+        "tokenize": False,
         "add_generation_prompt": add_generation_prompt,
     }
     try:
-        out = tokenizer.apply_chat_template(messages, enable_thinking=enable_thinking, **kwargs)
+        rendered = tokenizer.apply_chat_template(messages, enable_thinking=enable_thinking, **kwargs)
     except TypeError:
-        out = tokenizer.apply_chat_template(messages, **kwargs)
-    if isinstance(out, dict):
-        return list(out["input_ids"])
-    return list(out)
+        rendered = tokenizer.apply_chat_template(messages, **kwargs)
+    return list(tokenizer.encode(rendered, add_special_tokens=False))
 
 
 def train_sft_model(cfg: SFTTrainConfig) -> Path:
@@ -144,6 +142,8 @@ def train_sft_model(cfg: SFTTrainConfig) -> Path:
     train_ds = PokerSFTDataset(cfg.train_file)
     val_ds = PokerSFTDataset(cfg.val_file) if Path(cfg.val_file).exists() else None
     print(f"Loaded SFT datasets -> train: {len(train_ds)}, val: {len(val_ds) if val_ds else 0}")
+    if len(train_ds) == 0:
+        raise ValueError(f"Empty training dataset loaded from {cfg.train_file}")
 
     model_kwargs: dict[str, Any] = {
         "trust_remote_code": True,
@@ -189,10 +189,6 @@ def train_sft_model(cfg: SFTTrainConfig) -> Path:
     out_dir = Path(cfg.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    eff_batch = max(1, cfg.per_device_train_batch_size * cfg.gradient_accumulation_steps)
-    total_steps = max(1, int((len(train_ds) / eff_batch) * cfg.num_train_epochs))
-    warmup_steps = max(1, int(total_steps * cfg.warmup_ratio))
-
     train_args = TrainingArguments(
         output_dir=str(out_dir),
         num_train_epochs=cfg.num_train_epochs,
@@ -201,7 +197,7 @@ def train_sft_model(cfg: SFTTrainConfig) -> Path:
         gradient_accumulation_steps=cfg.gradient_accumulation_steps,
         learning_rate=cfg.learning_rate,
         lr_scheduler_type="cosine",
-        warmup_steps=warmup_steps,
+        warmup_ratio=cfg.warmup_ratio,
         fp16=cfg.fp16,
         bf16=not cfg.fp16,
         logging_steps=25,
