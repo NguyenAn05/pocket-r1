@@ -1,0 +1,12 @@
+env_name: hu_nlhe
+starting_stack_bb: 100.0
+small_blind_bb: 0.5
+big_blind_bb: 1.0
+all_in_merge_threshold: 0.85
+actions:
+  - FOLD
+  - CHECK_CALL
+  - BET_33
+  - BET_75
+  - BET_150
+  - ALL_IN

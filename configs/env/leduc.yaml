@@ -1,0 +1,7 @@
+env_name: leduc
+starting_stack: 100.0
+ante: 1.0
+bet_sizes:
+  preflop: 2.0
+  flop: 4.0
+max_raises_per_round: 2
