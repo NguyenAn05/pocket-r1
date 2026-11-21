@@ -30,9 +30,11 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=None, help="Concurrent worker threads")
     parser.add_argument("--no-ev", action="store_true", help="Skip Monte Carlo EV calculation")
     parser.add_argument("--output-dir", type=str, default=None)
+    parser.add_argument("--experiment-name", type=str, default=None)
     args = parser.parse_args()
 
     cfg: dict[str, Any] = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
+    exp_name = args.experiment_name or cfg["experiment_name"]
     slm_cfg = cfg["slm"]
     backend = args.backend or slm_cfg.get("backend", "openai_compatible")
     model_name = args.model or slm_cfg["model_name"]
@@ -87,13 +89,13 @@ def main() -> None:
         all_records.extend(recs)
 
     overall = compute_eval_summary(all_pair_bbs, all_records)
-    md = render_markdown_report(cfg["experiment_name"], hero.name, per_opp, overall)
+    md = render_markdown_report(exp_name, hero.name, per_opp, overall)
 
     (out_dir / "summary.md").write_text(md, encoding="utf-8")
     (out_dir / "summary.json").write_text(
         json.dumps(
             {
-                "experiment": cfg["experiment_name"],
+                "experiment": exp_name,
                 "model": hero.name,
                 "overall": overall.model_dump(),
                 "per_opponent": {k: v.model_dump() for k, v in per_opp.items()},
