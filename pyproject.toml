@@ -22,6 +22,10 @@ dev = [
 tracking = [
     "wandb>=0.17.0",
 ]
+kaggle = [
+    "kaggle>=1.8.0",
+    "six>=1.16.0",
+]
 
 [build-system]
 requires = ["hatchling"]

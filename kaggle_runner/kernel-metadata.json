@@ -1,0 +1,19 @@
+{
+  "id": "nguyenan2511/pocket-r1-runner",
+  "id_no": 146313639,
+  "title": "pocket-r1-runner",
+  "code_file": "pocket-r1-runner.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-images/python@sha256:7de5e1496c568335455c8bb1f86f5c36f0591e87e92e9aa9f0eefcd07f227c66",
+  "machine_shape": "NvidiaTeslaT4"
+}

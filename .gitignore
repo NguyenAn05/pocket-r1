@@ -38,6 +38,7 @@ mlruns/
 outputs/
 checkpoints/
 logs/
+kaggle_runner/output/
 *.ckpt
 *.pt
 *.safetensors
