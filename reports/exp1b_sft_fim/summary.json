@@ -1,0 +1,76 @@
+{
+  "experiment": "exp1b_sft_fim",
+  "model": "Qwen/Qwen3-4B-exp1b-sft-fim",
+  "overall": {
+    "total_hands": 2000,
+    "total_decisions": 5722,
+    "bb_per_100": -167.97,
+    "bb_per_100_ci95": 110.28,
+    "format_validity_rate": 0.9997,
+    "illegal_action_rate": 0.0003,
+    "card_hallucination_rate": 0.0,
+    "step2_hand_eval_acc": 0.8981,
+    "pot_odds_accuracy": 0.972,
+    "logic_action_consistency": 1.0,
+    "mean_response_tokens": 172.5,
+    "mean_ev_bb": null
+  },
+  "per_opponent": {
+    "calling_station": {
+      "total_hands": 500,
+      "total_decisions": 1857,
+      "bb_per_100": -252.3,
+      "bb_per_100_ci95": 151.3,
+      "format_validity_rate": 1.0,
+      "illegal_action_rate": 0.0,
+      "card_hallucination_rate": 0.0,
+      "step2_hand_eval_acc": 0.8923,
+      "pot_odds_accuracy": 0.9908,
+      "logic_action_consistency": 1.0,
+      "mean_response_tokens": 173.5,
+      "mean_ev_bb": null
+    },
+    "nit": {
+      "total_hands": 500,
+      "total_decisions": 952,
+      "bb_per_100": -262.2,
+      "bb_per_100_ci95": 177.27,
+      "format_validity_rate": 0.9989,
+      "illegal_action_rate": 0.0011,
+      "card_hallucination_rate": 0.0,
+      "step2_hand_eval_acc": 0.9286,
+      "pot_odds_accuracy": 0.9737,
+      "logic_action_consistency": 1.0,
+      "mean_response_tokens": 172.8,
+      "mean_ev_bb": null
+    },
+    "maniac": {
+      "total_hands": 500,
+      "total_decisions": 1427,
+      "bb_per_100": 269.6,
+      "bb_per_100_ci95": 314.53,
+      "format_validity_rate": 1.0,
+      "illegal_action_rate": 0.0,
+      "card_hallucination_rate": 0.0,
+      "step2_hand_eval_acc": 0.9082,
+      "pot_odds_accuracy": 0.9467,
+      "logic_action_consistency": 1.0,
+      "mean_response_tokens": 170.1,
+      "mean_ev_bb": null
+    },
+    "tag": {
+      "total_hands": 500,
+      "total_decisions": 1486,
+      "bb_per_100": -427.0,
+      "bb_per_100_ci95": 194.11,
+      "format_validity_rate": 0.9993,
+      "illegal_action_rate": 0.0007,
+      "card_hallucination_rate": 0.0,
+      "step2_hand_eval_acc": 0.8762,
+      "pot_odds_accuracy": 0.9717,
+      "logic_action_consistency": 1.0,
+      "mean_response_tokens": 173.3,
+      "mean_ev_bb": null
+    }
+  }
+}
