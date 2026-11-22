@@ -1,0 +1,8 @@
+dataset_name: prm_v1
+output_dir: data/prm_v1
+base_seed: 950000
+clean_examples: 8000
+synthetic_corruptions: 10000
+onpolicy_files: []
+val_ratio: 0.10
+equity_samples: 48

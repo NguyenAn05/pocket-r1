@@ -1,0 +1,16 @@
+experiment_name: deberta_prm_v1
+backbone: microsoft/deberta-v3-base
+train_file: data/prm_v1/train.jsonl
+val_synthetic_file: data/prm_v1/val_synthetic.jsonl
+val_onpolicy_file: data/prm_v1/val_onpolicy_real.jsonl
+output_dir: outputs/deberta_prm_v1
+max_length: 1024
+batch_size: 8
+grad_accum_steps: 4
+epochs: 3
+learning_rate: 2.0e-5
+weight_decay: 0.01
+warmup_ratio: 0.10
+label_smoothing: 0.05
+fp16: true
+seed: 42
