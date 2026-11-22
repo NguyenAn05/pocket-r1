@@ -131,7 +131,7 @@ def train_deberta_prm(cfg: PRMTrainConfig) -> dict[str, Any]:
     val_syn_loader = DataLoader(val_syn_ds, batch_size=cfg.batch_size * 2, shuffle=False, collate_fn=collate_fn) if len(val_syn_ds) else None
     val_op_loader = DataLoader(val_op_ds, batch_size=cfg.batch_size * 2, shuffle=False, collate_fn=collate_fn) if len(val_op_ds) else None
 
-    model = build_deberta_prm_model(cfg.backbone, len(tokenizer)).to(device)
+    model = build_deberta_prm_model(cfg.backbone, len(tokenizer)).float().to(device)
 
     # Mild per-step weighting for negative (error) examples so rare step errors get strong gradient
     all_train_lbls = np.array([x["labels"] for x in train_ds.items], dtype=np.float64)
