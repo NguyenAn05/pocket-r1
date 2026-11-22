@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Pocket-R1 — Ablation & DeBERTa PRM Visualizer</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 24px; }
+  h1, h2 { color: #f8fafc; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 32px; background: #1e293b; border-radius: 8px; overflow: hidden; }
+  th, td { padding: 10px 12px; border-bottom: 1px solid #334155; text-align: center; font-size: 14px; }
+  th { background: #0f172a; color: #94a3b8; text-transform: uppercase; font-size: 12px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .card-header { margin-bottom: 10px; color: #cbd5e1; }
+  .state { background: #0f172a; padding: 10px; border-radius: 6px; font-size: 12px; overflow-x: auto; color: #93c5fd; }
+  .step-row { display: flex; align-items: flex-start; gap: 10px; margin: 6px 0; font-size: 14px; line-height: 1.45; }
+  .badge { color: #fff; font-weight: 700; padding: 2px 8px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
+  code { background: #0f172a; padding: 2px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+  <h1>Pocket-R1 — Self-Evolving Poker SLM Dashboard</h1>
+  <h2>1. Ablation Study Summary (Held-out 2,000 Duplicate Deals)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Experiment</th><th>Model</th><th>Hands</th><th>BB/100 (95% CI)</th>
+        <th>Format</th><th>Step 2 Acc</th><th>Pot Odds</th><th>Consistency</th><th>Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>exp0_baseline</code></td><td><code>Qwen/Qwen3-4B</code></td><td>2000</td><td style='color:#f87171;font-weight:600'>-115.22 ± 66.38</td><td>99.8%</td><td>41.1%</td><td>88.3%</td><td>99.9%</td><td>155</td></tr><tr><td><code>exp1b_sft_fim</code></td><td><code>Qwen/Qwen3-4B-exp1b-sft-fim</code></td><td>2000</td><td style='color:#f87171;font-weight:600'>-167.97 ± 110.28</td><td>100.0%</td><td>89.8%</td><td>97.2%</td><td>100.0%</td><td>172</td></tr>
+    </tbody>
+  </table>
+  <h2>2. Highlight Hands &amp; DeBERTa-v3 Step-level Heatmap</h2>
+  <p>No highlight hands provided yet.</p>
+</body>
+</html>

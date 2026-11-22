@@ -41,6 +41,7 @@ logs/
 kaggle_runner/output*/
 kaggle_runner/exp1b_lora_pkg/
 kaggle_runner/onpolicy_pkg/
+kaggle_runner/prm_v1_pkg/
 *.ckpt
 *.pt
 *.safetensors
