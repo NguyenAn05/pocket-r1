@@ -270,6 +270,9 @@ def train_grpo_model(cfg: GRPOTrainConfig) -> Path:
         return log_probs.gather(-1, target.unsqueeze(-1)).squeeze(-1)
 
     for step in range(1, cfg.num_steps + 1):
+        import time
+
+        t_step = time.perf_counter()
         optimizer.zero_grad()
         step_rewards: list[float] = []
         step_ev_rewards: list[float] = []
@@ -288,8 +291,9 @@ def train_grpo_model(cfg: GRPOTrainConfig) -> Path:
             enc = tokenizer(rendered, return_tensors="pt").to(actor_device)
             prompt_len = int(enc["input_ids"].shape[1])
 
-            # 1. Generate G rollouts on GPU 0
+            # 1. Generate G rollouts on GPU 0 (disable grad checkpointing so KV-cache works at full speed!)
             model.eval()
+            model.gradient_checkpointing_disable()
             model.config.use_cache = True
             with torch.no_grad():
                 gen_ids = model.generate(
@@ -362,6 +366,7 @@ def train_grpo_model(cfg: GRPOTrainConfig) -> Path:
 
             # 4. Compute reference logprobs (base model with LoRA disabled) & GRPO policy gradient
             model.train()
+            model.gradient_checkpointing_enable()
             model.config.use_cache = False
             for i in range(cfg.group_size):
                 adv = advantages[i]
@@ -411,13 +416,14 @@ def train_grpo_model(cfg: GRPOTrainConfig) -> Path:
         with metrics_path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(log_row) + "\n")
 
-        if step % 10 == 0 or step == 1:
-            print(
-                f"[GRPO Step {step}/{cfg.num_steps}] "
-                f"R={log_row['mean_reward']:+.3f} (EV={log_row['mean_ev_reward']:+.3f}, "
-                f"PRM={log_row['mean_prm_reward']:.3f}) | KL={log_row['mean_kl']:.4f} | "
-                f"corr={log_row['corr_ev_prm']:+.3f} | FP={log_row['false_positive_rate']:.3f}"
-            )
+        elapsed_step = time.perf_counter() - t_step
+        print(
+            f"[GRPO Step {step}/{cfg.num_steps} | {elapsed_step:.1f}s] "
+            f"R={log_row['mean_reward']:+.3f} (EV={log_row['mean_ev_reward']:+.3f}, "
+            f"PRM={log_row['mean_prm_reward']:.3f}) | KL={log_row['mean_kl']:.4f} | "
+            f"corr={log_row['corr_ev_prm']:+.3f} | FP={log_row['false_positive_rate']:.3f}",
+            flush=True,
+        )
 
     # Save trained GRPO LoRA adapter + Co-evolution artifacts (mined FPs & RFT candidates)
     model.save_pretrained(str(out_dir))
