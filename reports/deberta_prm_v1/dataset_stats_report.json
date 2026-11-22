@@ -1,0 +1,31 @@
+{
+  "train_total": 23853,
+  "train_synthetic_clean_and_corrupted": 15834,
+  "train_onpolicy": 8019,
+  "val_synthetic_total": 2166,
+  "val_onpolicy_real_total": 2057,
+  "train_step_error_rates": {
+    "step1": 0.0622,
+    "step2": 0.2274,
+    "step3": 0.0821,
+    "step4": 0.061,
+    "step5": 0.0694,
+    "action": 0.1313
+  },
+  "val_synthetic_error_rates": {
+    "step1": 0.0845,
+    "step2": 0.1884,
+    "step3": 0.0993,
+    "step4": 0.0979,
+    "step5": 0.0951,
+    "action": 0.1837
+  },
+  "val_onpolicy_real_error_rates": {
+    "step1": 0.0,
+    "step2": 0.3155,
+    "step3": 0.0788,
+    "step4": 0.0,
+    "step5": 0.0165,
+    "action": 0.017
+  }
+}

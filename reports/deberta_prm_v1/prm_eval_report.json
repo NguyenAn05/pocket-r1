@@ -1,0 +1,236 @@
+{
+  "experiment": "deberta_prm_v1",
+  "backbone": "microsoft/deberta-v3-base",
+  "temperature": 0.58,
+  "val_onpolicy_real_raw": {
+    "overall": {
+      "auc_roc": 0.99,
+      "ece": 0.0533,
+      "accuracy": 0.9819,
+      "f1_valid": 0.9902,
+      "f1_error": 0.8734,
+      "precision_error": 0.8685,
+      "recall_error": 0.8784
+    },
+    "steps_1_to_3": {
+      "auc_roc": 0.9946,
+      "accuracy": 0.9835,
+      "f1_valid": 0.9905,
+      "f1_error": 0.9364,
+      "precision_error": 0.947,
+      "recall_error": 0.926
+    },
+    "per_step": {
+      "step1": {
+        "auc_roc": null,
+        "error_rate": 0.0,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 0.0,
+        "precision_error": 0.0,
+        "recall_error": 0.0
+      },
+      "step2": {
+        "auc_roc": 0.9747,
+        "error_rate": 0.3155,
+        "accuracy": 0.9504,
+        "f1_valid": 0.964,
+        "f1_error": 0.9203,
+        "precision_error": 0.9334,
+        "recall_error": 0.9076
+      },
+      "step3": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0788,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step4": {
+        "auc_roc": null,
+        "error_rate": 0.0,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 0.0,
+        "precision_error": 0.0,
+        "recall_error": 0.0
+      },
+      "step5": {
+        "auc_roc": 0.9056,
+        "error_rate": 0.0165,
+        "accuracy": 0.966,
+        "f1_valid": 0.9826,
+        "f1_error": 0.2857,
+        "precision_error": 0.2188,
+        "recall_error": 0.4118
+      },
+      "action": {
+        "auc_roc": 0.9099,
+        "error_rate": 0.017,
+        "accuracy": 0.9747,
+        "f1_valid": 0.9871,
+        "f1_error": 0.2353,
+        "precision_error": 0.2424,
+        "recall_error": 0.2286
+      }
+    }
+  },
+  "val_onpolicy_real_calibrated": {
+    "overall": {
+      "auc_roc": 0.99,
+      "ece": 0.0099,
+      "accuracy": 0.9819,
+      "f1_valid": 0.9902,
+      "f1_error": 0.8734,
+      "precision_error": 0.8685,
+      "recall_error": 0.8784
+    },
+    "steps_1_to_3": {
+      "auc_roc": 0.9946,
+      "accuracy": 0.9835,
+      "f1_valid": 0.9905,
+      "f1_error": 0.9364,
+      "precision_error": 0.947,
+      "recall_error": 0.926
+    },
+    "per_step": {
+      "step1": {
+        "auc_roc": null,
+        "error_rate": 0.0,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 0.0,
+        "precision_error": 0.0,
+        "recall_error": 0.0
+      },
+      "step2": {
+        "auc_roc": 0.9747,
+        "error_rate": 0.3155,
+        "accuracy": 0.9504,
+        "f1_valid": 0.964,
+        "f1_error": 0.9203,
+        "precision_error": 0.9334,
+        "recall_error": 0.9076
+      },
+      "step3": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0788,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step4": {
+        "auc_roc": null,
+        "error_rate": 0.0,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 0.0,
+        "precision_error": 0.0,
+        "recall_error": 0.0
+      },
+      "step5": {
+        "auc_roc": 0.9056,
+        "error_rate": 0.0165,
+        "accuracy": 0.966,
+        "f1_valid": 0.9826,
+        "f1_error": 0.2857,
+        "precision_error": 0.2188,
+        "recall_error": 0.4118
+      },
+      "action": {
+        "auc_roc": 0.9099,
+        "error_rate": 0.017,
+        "accuracy": 0.9747,
+        "f1_valid": 0.9871,
+        "f1_error": 0.2353,
+        "precision_error": 0.2424,
+        "recall_error": 0.2286
+      }
+    }
+  },
+  "val_synthetic_calibrated": {
+    "overall": {
+      "auc_roc": 1.0,
+      "ece": 0.0048,
+      "accuracy": 0.9995,
+      "f1_valid": 0.9997,
+      "f1_error": 0.9978,
+      "precision_error": 0.9969,
+      "recall_error": 0.9988
+    },
+    "steps_1_to_3": {
+      "auc_roc": 1.0,
+      "accuracy": 0.9989,
+      "f1_valid": 0.9994,
+      "f1_error": 0.9957,
+      "precision_error": 0.9938,
+      "recall_error": 0.9975
+    },
+    "per_step": {
+      "step1": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0845,
+        "accuracy": 0.9995,
+        "f1_valid": 0.9997,
+        "f1_error": 0.9973,
+        "precision_error": 1.0,
+        "recall_error": 0.9945
+      },
+      "step2": {
+        "auc_roc": 0.9999,
+        "error_rate": 0.1884,
+        "accuracy": 0.9972,
+        "f1_valid": 0.9983,
+        "f1_error": 0.9927,
+        "precision_error": 0.9879,
+        "recall_error": 0.9975
+      },
+      "step3": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0993,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step4": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0979,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step5": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0951,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "action": {
+        "auc_roc": 1.0,
+        "error_rate": 0.1837,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      }
+    }
+  },
+  "inference_benchmark": {
+    "num_sequences": 2057,
+    "elapsed_sec": 117.471,
+    "sequences_per_sec": 17.5,
+    "peak_vram_gb": 6.435
+  }
+}

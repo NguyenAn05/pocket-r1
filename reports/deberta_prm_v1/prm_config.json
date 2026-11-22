@@ -1,0 +1,8 @@
+{
+  "backbone_name": "/kaggle/working/deberta_prm_v1/encoder",
+  "vocab_size": 128002,
+  "hidden_size": 768,
+  "step_token": "[STEP]",
+  "num_checkpoints": 6,
+  "temperature": 0.58
+}
