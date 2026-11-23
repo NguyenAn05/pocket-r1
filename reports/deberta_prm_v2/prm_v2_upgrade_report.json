@@ -1,0 +1,82 @@
+{
+  "upgrade": "deberta_prm_v1 -> deberta_prm_v2",
+  "mined_fps_total": 63,
+  "temperature_v2": 0.5,
+  "fp_action_error_recall_v1": 0.0,
+  "fp_action_error_recall_v2": 0.4615,
+  "val_calibrated_v2": {
+    "overall": {
+      "auc_roc": 0.9966,
+      "ece": 0.0046,
+      "accuracy": 0.9921,
+      "f1_valid": 0.9955,
+      "f1_error": 0.9657,
+      "precision_error": 0.9873,
+      "recall_error": 0.9451
+    },
+    "steps_1_to_3": {
+      "auc_roc": 0.9999,
+      "accuracy": 0.9993,
+      "f1_valid": 0.9996,
+      "f1_error": 0.9968,
+      "precision_error": 1.0,
+      "recall_error": 0.9936
+    },
+    "per_step": {
+      "step1": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0929,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step2": {
+        "auc_roc": 1.0,
+        "error_rate": 0.1685,
+        "accuracy": 0.9978,
+        "f1_valid": 0.9987,
+        "f1_error": 0.9935,
+        "precision_error": 1.0,
+        "recall_error": 0.9872
+      },
+      "step3": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0756,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step4": {
+        "auc_roc": 1.0,
+        "error_rate": 0.0842,
+        "accuracy": 1.0,
+        "f1_valid": 1.0,
+        "f1_error": 1.0,
+        "precision_error": 1.0,
+        "recall_error": 1.0
+      },
+      "step5": {
+        "auc_roc": 0.9752,
+        "error_rate": 0.1102,
+        "accuracy": 0.9741,
+        "f1_valid": 0.9856,
+        "f1_error": 0.8723,
+        "precision_error": 0.9535,
+        "recall_error": 0.8039
+      },
+      "action": {
+        "auc_roc": 0.9812,
+        "error_rate": 0.1771,
+        "accuracy": 0.9806,
+        "f1_valid": 0.9883,
+        "f1_error": 0.9434,
+        "precision_error": 0.974,
+        "recall_error": 0.9146
+      }
+    }
+  }
+}
